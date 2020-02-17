@@ -1,6 +1,8 @@
 package com.openlegacy.SpringApi.model;
 
 
+import com.sun.istack.NotNull;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,9 +13,13 @@ public class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer itemNo;
 
+    @NotNull
     private String itemName;
 
+    @NotNull
     private Long itemInventoryCode;
+
+    @NotNull
     private Integer itemAmount;
 
 

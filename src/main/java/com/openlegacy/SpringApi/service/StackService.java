@@ -1,7 +1,7 @@
 package com.openlegacy.SpringApi.service;
 
 
-import com.openlegacy.SpringApi.controller.StackRepository;
+import com.openlegacy.SpringApi.repository.StackRepository;
 import com.openlegacy.SpringApi.model.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,8 @@ public class StackService {
         return stackRepository.getOne(ItemNo);
     }
 
-    public Boolean withdrawalItems(Item item, Integer quantity) {
+    public Boolean withdrawalItems(int itemNo, Integer quantity) {
+        Item item = stackRepository.getOne(itemNo);
         item.setItemAmount(item.getItemAmount() - quantity);
         if( stackRepository.save(item)!=null) {
             return true;
@@ -31,7 +32,8 @@ public class StackService {
         }
     }
 
-    public Boolean depositItems(Item item, Integer quantity) {
+    public Boolean depositItems(int itemNo, Integer quantity) {
+        Item item = stackRepository.getOne(itemNo);
         item.setItemAmount(item.getItemAmount() + quantity);
         if(stackRepository.save(item)!=null) {
             return true;
@@ -50,9 +52,9 @@ public class StackService {
         }
     }
 
-    public Boolean deleteItem(Item item){
+    public Boolean deleteItem(int itemNo){
         try {
-            stackRepository.delete(item);
+            stackRepository.deleteById(itemNo);
             return true;
         }catch (IllegalArgumentException e){
             return false;
